@@ -1,0 +1,86 @@
+# Compiled files
+*.dll
+*.exe
+*.pdb
+
+# NuGet packages
+*.nuget.props
+*.nuget.targets
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio files
+.vs/
+*.vscode/
+*.suo
+*.cache
+*.csproj.user
+*.dotnettools/
+*.userprefs
+*.log
+
+
+# Test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+
+
+# Installshield output folder
+[Ee]xpress/
+
+# DocProject file
+**/[Dd]oc[Ss]tyle.*
+
+# Local packages folder
+/.localhistory/
+
+
+
+# DotCover
+*.dotCover
+
+# Coveralls.io
+coveralls.json
+
+# Build script patches
+*.patch
+
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+**/Properties/launchSettings.json
+
+
+# Build and Test results
+[Dd]ebug/
+[Rr]elease/
+[Tt]est[Rr]esults/
+[Bb]uild[Ll]og.*
+
+# BenchmarkDotNet artifacts directory
+BenchmarkDotNet.Artifacts/
+
+# .NET Core
+.netcoreapp*/
+*/bin/
+*/obj/
+
+# Files and directories created by Visual Studio Code
+.vscode/
+.history/
+
+# End of File
