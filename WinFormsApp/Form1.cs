@@ -52,7 +52,7 @@ namespace WinFormsApp
             var y = (int)((int)node.GeometryNode.Center.Y - node.GeometryNode.Height / 2);
 
             SolidBrush darkBlueBrush = new(System.Drawing.Color.DarkBlue);
-            SolidBrush cornSilkBrush = new(System.Drawing.Color.Cornsilk);
+            SolidBrush biegeBrush = new(System.Drawing.Color.Cornsilk);
             var font = new Font("Arial", 20);
 
             int widthOffset = (node.LabelText.Split('\n').Max(substring => substring.Length) - 10) * 10;
