@@ -52,17 +52,17 @@ namespace WinFormsApp
             var y = (int)((int)node.GeometryNode.Center.Y - node.GeometryNode.Height / 2);
 
             SolidBrush darkBlueBrush = new(System.Drawing.Color.DarkBlue);
-            SolidBrush biegeBrush = new(System.Drawing.Color.Cornsilk);
+            SolidBrush cornSilkBrush = new(System.Drawing.Color.Cornsilk);
             var font = new Font("Arial", 20);
 
             int widthOffset = (node.LabelText.Split('\n').Max(substring => substring.Length) - 10) * 10;
             var tableName = new Rectangle(x, y, (int)node.GeometryNode.Width, (int)node.GeometryNode.Height);
             var keys = new Rectangle(x, y, (int)node.GeometryNode.Width, 30);
 
-            g.FillRectangle(biegeBrush, tableName);
+            g.FillRectangle(cornSilkBrush, tableName);
             g.FillRectangle(darkBlueBrush, keys);
 
-            g.DrawString(node.LabelText.Split('\n')[0], font, biegeBrush, keys);
+            g.DrawString(node.LabelText.Split('\n')[0], font, cornSilkBrush, keys);
             string str = "\n";
             for (int i = 1; i < node.LabelText.Split('\n').Length; i++)
             {
@@ -105,7 +105,7 @@ namespace WinFormsApp
                 else if (selectedObject is Node)
                 {
                     selectedObjectAttr = (selectedObject as Node).Attr.Clone();
-                    (selectedObject as Node).Attr.Color = Microsoft.Msagl.Drawing.Color.Green;
+                    (selectedObject as Node).Attr.Color = Microsoft.Msagl.Drawing.Color.Blue;
                     graphView.SetToolTip(toolTip,
                                        string.Format("Table {0}",
                                                      (selectedObject as Node).Attr.Id));
@@ -126,8 +126,6 @@ namespace WinFormsApp
             }
         }
 
-        static internal PointF PointF(Point2D p) { return new PointF((float)p.X, (float)p.Y); }
-
         private void InitGraph()
         {
             Graph graph = new("Database Relationships");
@@ -136,9 +134,9 @@ namespace WinFormsApp
             string connectionString = "Data Source=localhost;Initial Catalog=AdventureWorks2022;Integrated Security=True";
 
             SqlDatabaseSchemaReader schemaReader = new();
-            TableExtractor analyzer = new(schemaReader);
+            TableExtractor tableExtractor = new(schemaReader);
 
-            List<Table> tables = analyzer.GetTables(connectionString);
+            List<Table> tables = tableExtractor.GetTables(connectionString);
 
             foreach (Table table in tables)
             {
@@ -164,14 +162,13 @@ namespace WinFormsApp
 
             foreach (var node in graph.Nodes)
             {
-                node.Label.FontColor = Microsoft.Msagl.Drawing.Color.Navy;
+                node.Label.FontColor = Microsoft.Msagl.Drawing.Color.DarkBlue;
                 node.Attr.Shape = Shape.DrawFromGeometry;
-                node.Attr.FillColor = Microsoft.Msagl.Drawing.Color.Beige;
+                node.Attr.FillColor = Microsoft.Msagl.Drawing.Color.Cornsilk;
                 node.DrawNodeDelegate = new DelegateToOverrideNodeRendering(DrawNode);
                 node.NodeBoundaryDelegate = new DelegateToSetNodeBoundary(GetNodeBoundary);
             }
             double width = 150;
-            double height = 150;
 
             graph.Attr.LayerSeparation = 500;
             graph.Attr.NodeSeparation = 500;
