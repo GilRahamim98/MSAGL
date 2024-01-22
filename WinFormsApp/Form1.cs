@@ -172,9 +172,9 @@ namespace WinFormsApp
 
             graph.Attr.LayerSeparation = 500;
             graph.Attr.NodeSeparation = 500;
-            double arrowHeadLenght = width / 10;
+            double arrowHeadLength = width / 10;
             foreach (Edge e in graph.Edges)
-                e.Attr.ArrowheadLength = (float)arrowHeadLenght;
+                e.Attr.ArrowheadLength = (float)arrowHeadLength;
             graph.LayoutAlgorithmSettings = new SugiyamaLayoutSettings();
             graphView.Graph = graph;
         }
