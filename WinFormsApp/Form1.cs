@@ -6,6 +6,7 @@ using Point2D = Microsoft.Msagl.Core.Geometry.Point;
 using WinFormsApp.DataAccess;
 using WinFormsApp.Entities;
 using System.Drawing.Drawing2D;
+using System.Text;
 
 namespace WinFormsApp
 {
@@ -51,7 +52,7 @@ namespace WinFormsApp
             var x = (int)((int)node.GeometryNode.Center.X - node.GeometryNode.Width / 2);
             var y = (int)((int)node.GeometryNode.Center.Y - node.GeometryNode.Height / 2);
 
-            SolidBrush darkBlueBrush = new(System.Drawing.Color.DarkBlue);
+            SolidBrush darkBlueBrush = new(System.Drawing.Color.Red);
             SolidBrush cornSilkBrush = new(System.Drawing.Color.Cornsilk);
             var font = new Font("Arial", 20);
 
@@ -133,20 +134,22 @@ namespace WinFormsApp
             //PUT YOUR CONNECTION STRING HERE!
             string connectionString = "Data Source=localhost;Initial Catalog=AdventureWorks2022;Integrated Security=True";
 
-            SqlDatabaseSchemaReader schemaReader = new();
-            TableExtractor tableExtractor = new(schemaReader);
 
-            List<Table> tables = tableExtractor.GetTables(connectionString);
+            SqlDatabaseSchemaReader schemaReader = new();
+            TableExtractor analyzer = new(schemaReader);
+
+            List<Table> tables = analyzer.GetTables(connectionString);
 
             foreach (Table table in tables)
             {
                 Node node = new(table.TableName)
                 {
-                    LabelText = table.TableName + "\nPK:" + table.PrimaryKey
+                    LabelText = GetNodeLabelText(table)
                 };
                 node.Attr.Shape = Shape.Box;
                 graph.AddNode(node);
             }
+
 
             foreach (Table table in tables)
             {
@@ -154,7 +157,6 @@ namespace WinFormsApp
                 {
                     foreach (Tuple<string, Table> foreignKey in table.ForeignKeys)
                     {
-                        graph.FindNode(foreignKey.Item2.TableName).LabelText += "\nFK: " + foreignKey.Item1;
                         graph.AddEdge(table.TableName, foreignKey.Item2.TableName).Attr.ArrowheadAtTarget = ArrowStyle.ODiamond;
                     }
                 }
@@ -177,6 +179,19 @@ namespace WinFormsApp
                 e.Attr.ArrowheadLength = (float)arrowHeadLength;
             graph.LayoutAlgorithmSettings = new SugiyamaLayoutSettings();
             graphView.Graph = graph;
+        }
+
+        private string GetNodeLabelText(Table table)
+        {
+            // Helper method to create node label text
+            StringBuilder labelText = new StringBuilder($"{table.TableName}\n");
+
+            foreach (string column in table.Columns)
+            {
+                labelText.Append($"\n- {column}");
+            }
+
+            return labelText.ToString();
         }
 
         private void Form1_Load(object sender, EventArgs e)
